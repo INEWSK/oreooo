@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.footer {
+  @apply flex flex-col justify-center items-center;
+  .lang-list {
+    .lang {
+      @apply inline;
+      &:not(:first-child) {
+        @apply before:content-['_/_'];
+      }
+    }
+  }
+
+  .meta {
+    @apply mx-4;
+    a {
+      @apply text-gray-500;
+      &:not(:first-child) {
+        @apply before:content-['_|_'];
+      }
+    }
+  }
+}
