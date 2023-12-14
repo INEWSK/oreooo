@@ -1,14 +1,19 @@
 import Image from "next/image";
 
-const Loading = () => {
+const Loading = ({ show = false }: { show?: boolean }) => {
   return (
-    <div className="flex justify-center items-center">
+    <div className="loading">
       <Image
         className="animate-spin-slow"
         src="/assets/images/oreo.png"
         alt="loading"
-        width={64}
-        height={64}
+        width={0}
+        height={0}
+        sizes="100vw"
+        style={{
+          width: "10rem",
+          height: "10rem",
+        }}
       />
     </div>
   );

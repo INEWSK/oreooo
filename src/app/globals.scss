@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.container {
+  @apply flex flex-col items-center justify-center min-h-screen w-screen bg-[#caad9f] text-gray-700;
+}
+
 .footer {
-  @apply flex flex-col justify-center items-center;
   .lang-list {
+    @apply text-center;
     .lang {
       @apply inline;
       &:not(:first-child) {
