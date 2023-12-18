@@ -10,11 +10,11 @@ const config: Config = {
     extend: {
       animation: {
         "spin-slow": "spin 6s linear infinite",
-        "bounce-in": "scale-bounce 0.5s ease-in-out",
-        "bounce-out": "scale-bounce-out 0.5s ease-in-out",
+        "bounce-in": "scale-bounce-in 0.5s ease-in-out",
+        "bounce-out": "scale-bounce-out 0.5s ease-in-out forwards",
       },
       keyframes: {
-        "scale-bounce": {
+        "scale-bounce-in": {
           "0%": { transform: "scale(0)" },
           "50%": { transform: "scale(1.1)" },
           "100%": { transform: "scale(1)" },

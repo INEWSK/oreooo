@@ -8,7 +8,7 @@ const locales: {
   ja: "日",
 };
 
-const Footer = () => {
+export default function Footer() {
   return (
     <footer className="footer">
       <ul className="lang-list">
@@ -28,6 +28,4 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

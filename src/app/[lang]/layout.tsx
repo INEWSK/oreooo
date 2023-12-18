@@ -1,5 +1,6 @@
-import "@/app/globals.scss";
 import NextIntlProvider from "@/lib/NextIntlRegistry";
+import { DEFAULT_META } from "@/shared/constants";
+import "@/shared/styles/globals.scss";
 import dayjs from "dayjs";
 
 import type { Metadata } from "next";
@@ -7,29 +8,27 @@ import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 
 const seto = localFont({
-  src: "../../fonts/Seto.woff",
+  src: "../../shared/fonts/Seto.woff",
   display: "swap",
   weight: "400",
 });
 
-export const metadata: Metadata = {
-  title: "OREOOO",
-};
+export const metadata: Metadata = DEFAULT_META;
 
 // Can be imported from a shared config
 const locales = ["en", "zh-hant", "ja"];
 
-type LocaleLayoutProps = {
+type RootLayoutProps = {
   children: React.ReactNode;
   params: {
     lang: string;
   };
 };
 
-export default async function LocaleLayout({
+export default async function RootLayout({
   children,
   params: { lang },
-}: LocaleLayoutProps) {
+}: RootLayoutProps) {
   // Validate that the incoming `locale` parameter is valid
   if (!locales.includes(lang)) notFound();
 

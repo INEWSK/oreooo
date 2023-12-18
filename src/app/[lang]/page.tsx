@@ -1,49 +1,25 @@
 "use client";
 
 import Footer from "@/components/footer";
-import Home from "@/components/home";
 import Loading from "@/components/loading";
-import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import Container from "../ui/container";
+import usePage from "./page.hook";
 
-export default function Index() {
-  const t = useTranslations("Index");
-  // const [oreoList, setOreoList] = useState<OreoKey[]>([]);
+export default function Page() {
+  const { loading, animating, ...page } = usePage();
 
-  const [loading, setLoading] = useState(true);
-  const [animating, setAnimating] = useState(true);
+  const onSubmit = () => {
+    page.addLoading();
+  };
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (animating) {
-      timer = setTimeout(() => {
-        setAnimating(false);
-      }, 1000); // trigger bounce out animation after 1s
-    } else {
-      // one of the way to hide loading after bounce out
-      timer = setTimeout(() => {
-        setLoading(false);
-      }, 500); // 500ms is the duration of the animation
-    }
-    return () => clearTimeout(timer);
-  }, [animating]);
-
-  // const handleSubmit = (newList: OreoKey[]) => {};
+  const onReset = () => {};
 
   return (
-    <div className="container">
-      {loading && (
-        <div
-          className={`transition-all transform ${
-            animating ? `animate-bounce-in` : `animate-bounce-out`
-          }`}
-        >
-          <Loading />
-        </div>
-      )}
+    <div className="app">
+      <Loading show={loading} animate={animating} />
       {!loading && (
         <>
-          <Home />
+          <Container onReset={onReset} onSubmit={onSubmit} />
           <Footer />
         </>
       )}
