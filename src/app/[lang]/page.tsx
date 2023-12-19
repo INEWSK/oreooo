@@ -2,8 +2,8 @@
 
 import Footer from "@/components/footer";
 import Loading from "@/components/loading";
-import Container from "../ui/container";
-import usePage from "./page.hook";
+import usePage from "./hook/usePage";
+import Container from "./ui/container";
 
 export default function Page() {
   const { loading, animating, ...page } = usePage();
@@ -14,15 +14,20 @@ export default function Page() {
 
   const onReset = () => {};
 
-  return (
-    <div className="app">
-      <Loading show={loading} animate={animating} />
-      {!loading && (
+  const render = () => {
+    if (loading) {
+      return <Loading show={loading} animate={animating} />;
+    }
+
+    if (!loading) {
+      return (
         <>
           <Container onReset={onReset} onSubmit={onSubmit} />
           <Footer />
         </>
-      )}
-    </div>
-  );
+      );
+    }
+  };
+
+  return <div className="app">{render()}</div>;
 }
