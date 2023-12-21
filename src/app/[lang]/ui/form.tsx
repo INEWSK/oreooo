@@ -1,15 +1,18 @@
-import { useCallback, useMemo, useState } from "react";
-import { FaRandom } from "react-icons/fa";
+import { useMemo, useState } from "react";
+import { FaRandom, FaTimes } from "react-icons/fa";
 import useKeyBindings from "../hook/useKeyBindings";
 
 const OreoKey = ["O", "R", "and", "-1"];
 
-export default function Form({ submit }: { submit: () => void }) {
+export default function Form({
+  submit,
+}: {
+  submit: (oreoList: OreoKey[]) => void;
+}) {
   const [oreoList, setOreoList] = useState<OreoKey[]>([]);
-  console.log("🚀 ~ file: form.tsx:9 ~ Form ~ oreoList:", oreoList);
   const bindings = useMemo(
     () => ({
-      Enter: () => submit(),
+      Enter: () => submit(oreoList),
       o: () => setOreoList([...oreoList, "o"]),
       r: () => setOreoList([...oreoList, "r"]),
       "-": () =>
@@ -24,7 +27,7 @@ export default function Form({ submit }: { submit: () => void }) {
 
   useKeyBindings(bindings);
 
-  const onClick = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+  const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const value = e.currentTarget.innerText;
 
     switch (value) {
@@ -47,19 +50,26 @@ export default function Form({ submit }: { submit: () => void }) {
       default:
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
-  // const renderCount = useRef(0);
-
-  // useEffect(() => {
-  //   renderCount.current += 1;
-  //   console.log(`onClick has been recreated ${renderCount.current} time(s)`);
-  // }, [onClick]);
+  const trailing = (
+    <span
+      className="trailing"
+      onClick={() =>
+        oreoList.length > 0 ? setOreoList([]) : setOreoList(["o", "r"])
+      }
+    >
+      {oreoList.length === 0 ? (
+        <FaRandom className="random" />
+      ) : (
+        <FaTimes className="remove" />
+      )}
+    </span>
+  );
 
   return (
-    <div className="container">
-      <div className="form">
+    <>
+      <div className="card form">
         <label className="title">{`I would like: `}</label>
         <div className="input-box">
           <input
@@ -69,9 +79,7 @@ export default function Form({ submit }: { submit: () => void }) {
             value={oreoList.join("")}
             readOnly
           />
-          <span className="trailing">
-            <FaRandom />
-          </span>
+          {trailing}
         </div>
         <div className="control">
           {OreoKey.map((key) => (
@@ -81,9 +89,13 @@ export default function Form({ submit }: { submit: () => void }) {
           ))}
         </div>
       </div>
-      <button className="submit-btn" type="button" onClick={() => submit()}>
+      <button
+        className="submit-btn"
+        type="button"
+        onClick={() => submit(oreoList)}
+      >
         Generate
       </button>
-    </div>
+    </>
   );
 }

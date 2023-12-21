@@ -1,16 +1,16 @@
-import Form from "./form";
+import Result from "./result";
 
-export default function Container({
-  onSubmit,
-  onReset,
-}: {
-  onSubmit: () => void;
-  onReset: () => void;
-}) {
+export default function Container({ show = false }: { show?: boolean }) {
+  const result: OreoKey[] = [];
+
+  const submit = (oreoList: OreoKey[]) => {};
+
+  const back = () => {};
+
   return (
-    <div className="main">
-      <Form submit={onSubmit} />
-      {/* <Result reset={onReset} /> */}
-    </div>
+    <main className={`main ${show ? `block` : `hidden`}`}>
+      {/* <Form submit={submit} /> */}
+      <Result back={back} result={result} />
+    </main>
   );
 }

@@ -1,3 +1,8 @@
-export default function Result({ reset }: { reset: () => void }) {
-  return <div>Result</div>;
+type ResultProps = {
+  back: () => void;
+  result: OreoKey[];
+};
+
+export default function Result({ back, result }: ResultProps) {
+  return <div className="card result">Result</div>;
 }

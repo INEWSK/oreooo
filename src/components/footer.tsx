@@ -8,9 +8,9 @@ const locales: {
   ja: "日",
 };
 
-export default function Footer() {
+export default function Footer({ show = false }: { show?: boolean }) {
   return (
-    <footer className="footer">
+    <footer className={`footer ${show ? `block` : `hidden`}`}>
       <ul className="lang-list">
         {Object.keys(locales).map((locale) => (
           <li key={locale} className="lang">

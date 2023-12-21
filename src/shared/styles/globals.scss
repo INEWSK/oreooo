@@ -11,12 +11,12 @@
 }
 
 .main {
-  @apply mx-auto w-full max-w-lg min-w-min;
-  .container {
-    @apply px-2 pt-8;
+  @apply mx-auto w-full max-w-lg min-w-min m-4 mb-0;
+  .card {
+    @apply bg-white rounded-xl shadow-xl p-8;
   }
   .form {
-    @apply bg-white flex flex-col gap-6 rounded-t-xl p-8;
+    @apply flex flex-col gap-6 rounded-b-none;
     .title {
       @apply text-2xl font-bold text-center;
     }

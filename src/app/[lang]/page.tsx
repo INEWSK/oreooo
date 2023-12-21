@@ -8,25 +8,14 @@ import Container from "./ui/container";
 export default function Page() {
   const { loading, animating, ...page } = usePage();
 
-  const onSubmit = () => {
-    page.addLoading();
-  };
-
-  const onReset = () => {};
-
   const render = () => {
-    if (loading) {
-      return <Loading show={loading} animate={animating} />;
-    }
-
-    if (!loading) {
-      return (
-        <>
-          <Container onReset={onReset} onSubmit={onSubmit} />
-          <Footer />
-        </>
-      );
-    }
+    return (
+      <>
+        <Loading show={loading} animate={animating} />
+        <Container show={!loading} />
+        <Footer show={!loading} />
+      </>
+    );
   };
 
   return <div className="app">{render()}</div>;
