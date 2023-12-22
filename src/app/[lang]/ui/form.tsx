@@ -52,25 +52,10 @@ export default function Form({
     }
   };
 
-  const trailing = (
-    <span
-      className="trailing"
-      onClick={() =>
-        oreoList.length > 0 ? setOreoList([]) : setOreoList(["o", "r"])
-      }
-    >
-      {oreoList.length === 0 ? (
-        <FaRandom className="random" />
-      ) : (
-        <FaTimes className="remove" />
-      )}
-    </span>
-  );
-
   return (
     <>
       <div className="card form">
-        <label className="title">{`I would like: `}</label>
+        <h2 className="title">{`I'd like: `}</h2>
         <div className="input-box">
           <input
             type="text"
@@ -79,7 +64,18 @@ export default function Form({
             value={oreoList.join("")}
             readOnly
           />
-          {trailing}
+          <span
+            className="trailing"
+            onClick={() =>
+              oreoList.length > 0 ? setOreoList([]) : setOreoList(["o", "r"])
+            }
+          >
+            {oreoList.length === 0 ? (
+              <FaRandom className="random" />
+            ) : (
+              <FaTimes className="remove" />
+            )}
+          </span>
         </div>
         <div className="control">
           {OreoKey.map((key) => (
