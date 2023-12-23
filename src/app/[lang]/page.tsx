@@ -2,21 +2,32 @@
 
 import Footer from "@/components/footer";
 import Loading from "@/components/loading";
+import { useState } from "react";
 import usePage from "./hook/usePage";
-import Container from "./ui/container";
+import Form from "./ui/form";
+import Output from "./ui/output";
 
 export default function Page() {
   const { loading, animating, ...page } = usePage();
+  const [oreoList, setOreoList] = useState<OreoKey[]>([]);
+  const show = oreoList.length === 0;
 
-  const render = () => {
-    return (
-      <>
-        <Loading show={loading} animate={animating} />
-        <Container show={!loading} />
-        <Footer show={!loading} />
-      </>
-    );
+  const submit = (oreoList: OreoKey[]) => {
+    setOreoList(oreoList);
   };
 
-  return <div className="app">{render()}</div>;
+  const back = () => {
+    setOreoList([]);
+  };
+
+  return (
+    <div className="app">
+      <Loading show={loading} animate={animating} />
+      <main className={`main ${loading ? "hidden" : "block"}`}>
+        <Form submit={submit} show={show} />
+        <Output back={back} oreoList={oreoList} />
+        <Footer />
+      </main>
+    </div>
+  );
 }

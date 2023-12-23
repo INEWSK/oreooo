@@ -1,3 +1,4 @@
+import { getRandomInteger } from "@/utils";
 import { useMemo, useState } from "react";
 import { FaRandom, FaTimes } from "react-icons/fa";
 import useKeyBindings from "../hook/useKeyBindings";
@@ -6,8 +7,10 @@ const OreoKey = ["O", "R", "and", "-1"];
 
 export default function Form({
   submit,
+  show,
 }: {
   submit: (oreoList: OreoKey[]) => void;
+  show: boolean;
 }) {
   const [oreoList, setOreoList] = useState<OreoKey[]>([]);
   const bindings = useMemo(
@@ -52,9 +55,27 @@ export default function Form({
     }
   };
 
+  const generateRandomOreoList = (): OreoKey[] => {
+    const keys = ["o", "r", "-"];
+    // type OreoKey = "o" | "r" | "-"
+    const randomList: OreoKey[] = Array.from(
+      { length: getRandomInteger(3, 10) },
+      () => {
+        const index = getRandomInteger(0, 2);
+        return keys[index] as OreoKey;
+      }
+    );
+
+    // remove "-" from the beginning and the end
+    if (randomList[0] === "-") randomList.shift();
+    if (randomList[randomList.length - 1] === "-") randomList.pop();
+
+    return randomList.length ? randomList : generateRandomOreoList();
+  };
+
   return (
-    <>
-      <div className="card form">
+    <div className={`form ${!show ? "hidden" : "block"}`}>
+      <div className="card">
         <h2 className="title">{`I'd like: `}</h2>
         <div className="input-box">
           <input
@@ -67,7 +88,9 @@ export default function Form({
           <span
             className="trailing"
             onClick={() =>
-              oreoList.length > 0 ? setOreoList([]) : setOreoList(["o", "r"])
+              oreoList.length > 0
+                ? setOreoList([])
+                : setOreoList(generateRandomOreoList())
             }
           >
             {oreoList.length === 0 ? (
@@ -85,6 +108,7 @@ export default function Form({
           ))}
         </div>
       </div>
+
       <button
         className="submit-btn"
         type="button"
@@ -92,6 +116,6 @@ export default function Form({
       >
         Generate
       </button>
-    </>
+    </div>
   );
 }

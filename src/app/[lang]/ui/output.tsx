@@ -1,3 +1,4 @@
+import { loadImage } from "@/utils";
 import { useCallback, useEffect, useRef } from "react";
 
 type OutputProps = {
@@ -5,109 +6,112 @@ type OutputProps = {
   oreoList: OreoKey[];
 };
 
+export const downloadImage = ({ url }: { url: string }) => {
+  const link = document.createElement("a");
+  link.download = "oreo.png";
+  link.href = url;
+  link.click();
+};
+
+const loadOreoImages = async () => {
+  const [o, r, of] = await Promise.all([
+    loadImage("assets/images/o.png"),
+    loadImage("assets/images/r.png"),
+    loadImage("assets/images/of.png"),
+  ]);
+  return { o, r, of };
+};
+
 export default function Output({ back, oreoList }: OutputProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const oreoText = oreoList.join("");
   const imgUrl = useRef<string>("");
 
-  const loadImage = useCallback((src: string) => {
-    return new Promise<HTMLImageElement>((resolve, reject) => {
-      const image = new Image();
-      image.onload = () => resolve(image);
-      image.onerror = (error) => reject(error);
-      image.src = src;
-    });
-  }, []);
+  type DrawItem = {
+    image: HTMLImageElement;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+  };
 
-  const loadOreoImages = useCallback(async () => {
-    const [o, r, of] = await Promise.all([
-      loadImage("assets/images/o.png"),
-      loadImage("assets/images/r.png"),
-      loadImage("assets/images/of.png"),
-    ]);
-    return { o, r, of };
-  }, [loadImage]);
+  const convertImage = useCallback(
+    (list: OreoKey[], imageList: { [key: string]: HTMLImageElement }) => {
+      const copyList = [...list];
 
-  const generate = useCallback(async () => {
-    if (!canvasRef.current) return;
-    const oreoImages = await loadOreoImages();
-    await generateImage(canvasRef.current, oreoList, oreoImages);
-  }, [oreoList, loadOreoImages]);
-
-  const generateImage = (
-    canvas: HTMLCanvasElement,
-    list: OreoKey[],
-    imageList: { [key: string]: HTMLImageElement }
-  ) => {
-    const copyList = [...list];
-    const drawList: {
-      image: HTMLImageElement;
-      x: number;
-      y: number;
-      width: number;
-      height: number;
-    }[] = [];
-
-    // remove last "-" if exist
-    if (copyList[copyList.length - 1] === "-") {
-      copyList.pop();
-    }
-
-    // calculate canvas height
-    let height = 0;
-    copyList.forEach((item) => {
-      if (item === "-") {
-        height += 72;
-      } else {
-        const drawItem = {
-          image: imageList[item],
-          x: item === "r" ? 10 : 0,
-          y: height,
-          width: item === "r" ? 220 : 240,
-          height: item === "r" ? 155 : 160,
-        };
-        drawList.splice(0, 0, drawItem);
-        height += 24;
+      // remove last "-" if exist
+      if (copyList[copyList.length - 1] === "-") {
+        copyList.pop();
       }
-    });
-    height += 160 - 24; // add last oreo height
 
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      canvas.height = height;
-      drawList.forEach((item) => {
-        ctx.drawImage(item.image, item.x, item.y, item.width, item.height);
-      });
-    }
+      const OREO_HEIGHT = 24;
+      const GAP_HEIGHT = 72;
+      const LAST_OREO_HEIGHT = 160 - OREO_HEIGHT;
 
-    imgUrl.current = canvas.toDataURL("image/png");
-  };
+      // calculate canvas height
+      let canvasHeight = 0;
 
-  const downloadImage = () => {
-    const link = document.createElement("a");
-    link.download = "oreo.png";
-    link.href = imgUrl.current;
-    link.click();
-  };
+      const drawList = copyList.reduce((acc: DrawItem[], item: OreoKey) => {
+        if (item === "-") {
+          canvasHeight += GAP_HEIGHT;
+        } else {
+          const drawItem = {
+            image: imageList[item],
+            x: item === "r" ? 10 : 0,
+            y: canvasHeight,
+            width: item === "r" ? 220 : 240,
+            height: item === "r" ? 155 : 160,
+          };
+          canvasHeight += OREO_HEIGHT;
+          acc.unshift(drawItem);
+        }
+        return acc;
+      }, []);
+
+      canvasHeight += LAST_OREO_HEIGHT;
+
+      const canvas = canvasRef.current!;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        canvas.height = canvasHeight;
+        drawList.map(({ image, x, y, width, height }) => {
+          ctx.drawImage(image, x, y, width, height);
+        });
+      }
+
+      imgUrl.current = canvas.toDataURL("image/png");
+    },
+    [canvasRef, imgUrl]
+  );
 
   useEffect(() => {
+    const generate = async () => {
+      const oreoImages = await loadOreoImages();
+      convertImage(oreoList, oreoImages);
+    };
+
     generate();
-  }, [oreoList, generate]);
+  }, [oreoList, convertImage]);
 
   return (
-    <div className="card output">
-      <h2 className="title">{`Here's your`}</h2>
-      <h3 className="sub-title">{oreoText}</h3>
-      <div className="output-image">
-        <canvas width="240" height="0" ref={canvasRef} />
-      </div>
-      <div className="control">
-        <button className="btn" type="button" onClick={back}>
-          Back
-        </button>
-        <button className="btn" type="button" onClick={downloadImage}>
-          Save Image
-        </button>
+    <div className={`output ${!oreoList.length ? "hidden" : "block"}`}>
+      <div className="card">
+        <h2 className="title">{`Here's your`}</h2>
+        <h3 className="sub-title">{oreoList.join("")}</h3>
+        <div className="output-image">
+          <canvas width="240" height="0" ref={canvasRef} />
+        </div>
+        <div className="control">
+          <button className="btn" type="button" onClick={back}>
+            Back
+          </button>
+          <button
+            className="btn"
+            type="button"
+            onClick={() => downloadImage({ url: imgUrl.current })}
+          >
+            Save Image
+          </button>
+        </div>
       </div>
     </div>
   );

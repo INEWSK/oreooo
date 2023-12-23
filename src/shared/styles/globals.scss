@@ -14,59 +14,57 @@
   @apply mx-auto w-full max-w-lg min-w-min m-4 mb-0;
 
   .card {
-    @apply bg-white rounded-xl shadow-xl p-8;
-  }
-
-  .title {
-    @apply text-2xl font-bold;
-  }
-
-  .sub-title {
-    @apply text-2xl;
+    @apply bg-white rounded-xl shadow-xl p-8 flex flex-col gap-6 items-center justify-center;
   }
 
   .form {
-    @apply flex flex-col gap-6 rounded-b-none items-center justify-center;
-
-    .input-box {
-      @apply relative;
-
-      input {
-        @apply w-full px-4 py-3 pe-11 text-3xl border border-zinc-200 rounded-xl shadow-sm text-center outline-none caret-transparent;
-      }
-
-      .trailing {
-        @apply absolute inset-y-0 end-0 flex items-center z-20 me-2 p-4 cursor-pointer text-zinc-400;
-
-        &:hover {
-          @apply text-zinc-600 duration-300;
-        }
-      }
+    .card {
+      @apply rounded-b-none;
     }
   }
 
-  .control {
-    @apply flex gap-4 select-none;
+  .title {
+    @apply text-2xl font-bold cursor-default;
+  }
 
-    .btn {
-      @apply px-4 py-2 border-2 border-zinc-700 rounded-full cursor-pointer transition-colors ease-in-out;
+  .sub-title {
+    @apply text-2xl cursor-auto;
+  }
+
+  .input-box {
+    @apply relative;
+
+    input {
+      @apply w-full px-4 py-3 pe-11 text-3xl border border-zinc-200 rounded-xl shadow-sm text-center outline-none caret-transparent;
+    }
+
+    .trailing {
+      @apply absolute inset-y-0 end-0 flex items-center z-20 me-2 p-4 cursor-pointer text-zinc-400;
 
       &:hover {
-        @apply bg-zinc-700 text-white duration-200;
+        @apply text-zinc-600 duration-300;
       }
     }
   }
+}
 
-  .submit-btn {
-    @apply text-white bg-zinc-600 p-4 rounded-b-xl text-2xl transition-colors ease-in-out w-full;
+.control {
+  @apply flex gap-4 select-none;
+
+  .btn {
+    @apply px-4 py-2 border-2 border-zinc-700 rounded-full cursor-pointer transition-colors ease-in-out;
 
     &:hover {
-      @apply bg-zinc-700 duration-200;
+      @apply bg-zinc-700 text-white duration-200;
     }
   }
+}
 
-  .output {
-    @apply flex flex-col gap-6 justify-center items-center;
+.submit-btn {
+  @apply text-white bg-zinc-600 p-4 rounded-b-xl text-2xl transition-colors ease-in-out w-full;
+
+  &:hover {
+    @apply bg-zinc-700 duration-200;
   }
 }
 

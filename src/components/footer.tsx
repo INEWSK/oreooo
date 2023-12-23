@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 const locales: {
   [key: string]: string;
 } = {
@@ -8,16 +6,16 @@ const locales: {
   ja: "日",
 };
 
-export default function Footer({ show = false }: { show?: boolean }) {
+export default function Footer() {
   return (
-    <footer className={`footer ${show ? `block` : `hidden`}`}>
-      <ul className="lang-list">
+    <footer className="footer">
+      {/* <ul className="lang-list">
         {Object.keys(locales).map((locale) => (
           <li key={locale} className="lang">
             <Link href={`/${locale}`}>{locales[locale]}</Link>
           </li>
         ))}
-      </ul>
+      </ul> */}
       <div className="meta">
         <a href="https://inewsk.me" target="_blank">
           Kurokawa Yuji
