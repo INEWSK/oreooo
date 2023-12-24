@@ -6,6 +6,12 @@ type OutputProps = {
   oreoList: OreoKey[];
 };
 
+type ImageList = {
+  o: HTMLImageElement;
+  r: HTMLImageElement;
+  of: HTMLImageElement;
+};
+
 export const downloadImage = ({ url }: { url: string }) => {
   const link = document.createElement("a");
   link.download = "oreo.png";
@@ -35,7 +41,7 @@ export default function Output({ back, oreoList }: OutputProps) {
   };
 
   const convertImage = useCallback(
-    (list: OreoKey[], imageList: { [key: string]: HTMLImageElement }) => {
+    (list: OreoKey[], imageList: ImageList) => {
       const copyList = [...list];
 
       // remove last "-" if exist
@@ -83,14 +89,14 @@ export default function Output({ back, oreoList }: OutputProps) {
     [canvasRef, imgUrl]
   );
 
-  useEffect(() => {
-    const generate = async () => {
-      const oreoImages = await loadOreoImages();
-      convertImage(oreoList, oreoImages);
-    };
-
-    generate();
+  const generate = useCallback(async () => {
+    const oreoImages = await loadOreoImages();
+    convertImage(oreoList, oreoImages);
   }, [oreoList, convertImage]);
+
+  useEffect(() => {
+    generate();
+  }, [oreoList, convertImage, generate]);
 
   return (
     <div className={`output ${!oreoList.length ? "hidden" : "block"}`}>

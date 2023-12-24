@@ -1,1 +1,1 @@
-type OreoKey = "o" | "r" | "-";
+type OreoKey = "o" | "r" | "-" | "of";

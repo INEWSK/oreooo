@@ -9,3 +9,20 @@ export const loadImage = (src: string) => {
 
 export const getRandomInteger = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
+
+export const generateRandomOreoList = (): OreoKey[] => {
+  const keys = ["o", "r", "-"];
+  const randomList: OreoKey[] = Array.from(
+    { length: getRandomInteger(3, 10) },
+    () => {
+      const index = getRandomInteger(0, 2);
+      return keys[index] as OreoKey;
+    }
+  );
+
+  // remove "-" from the beginning and the end
+  if (randomList[0] === "-") randomList.shift();
+  if (randomList[randomList.length - 1] === "-") randomList.pop();
+
+  return randomList.length ? randomList : generateRandomOreoList();
+};

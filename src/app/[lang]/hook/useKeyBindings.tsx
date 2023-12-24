@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 
-const useKeyBindings = (bindings: { [key: string]: () => void }) => {
+const useKeyBindings = (bindings: { keys: string[]; action: () => void }[]) => {
   useEffect(() => {
     const onKeyStroke = (e: KeyboardEvent) => {
-      const action = bindings[e.key];
-      if (action) {
-        action();
-      }
+      bindings.forEach((binding) => {
+        if (binding.keys.includes(e.key)) {
+          binding.action && binding.action();
+        }
+      });
     };
 
     document.addEventListener("keydown", onKeyStroke);

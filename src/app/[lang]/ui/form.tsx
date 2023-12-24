@@ -1,5 +1,5 @@
-import { getRandomInteger } from "@/utils";
-import { useMemo, useState } from "react";
+import { generateRandomOreoList } from "@/utils";
+import { useState } from "react";
 import { FaRandom, FaTimes } from "react-icons/fa";
 import useKeyBindings from "../hook/useKeyBindings";
 
@@ -13,65 +13,62 @@ export default function Form({
   show: boolean;
 }) {
   const [oreoList, setOreoList] = useState<OreoKey[]>([]);
-  const bindings = useMemo(
-    () => ({
-      Enter: () => submit(oreoList),
-      o: () => setOreoList([...oreoList, "o"]),
-      r: () => setOreoList([...oreoList, "r"]),
-      "-": () =>
-        oreoList.length > 0 && oreoList[oreoList.length - 1] !== "-"
-          ? setOreoList([...oreoList, "-"])
-          : null,
-      Backspace: () =>
-        oreoList.length > 0 && setOreoList(oreoList.slice(0, -1)),
-    }),
-    [oreoList, submit]
-  );
 
-  useKeyBindings(bindings);
-
-  const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const value = e.currentTarget.innerText;
-
-    switch (value) {
-      case "O":
-        setOreoList((prev) => [...prev, "o"]);
+  const action = (action: string, value?: string) => {
+    switch (action) {
+      case "add":
+        if (value === "-") {
+          setOreoList((prev) =>
+            prev.length && prev[prev.length - 1] !== "-"
+              ? [...prev, "-"]
+              : [...prev]
+          );
+        }
+        if (value === "o") {
+          setOreoList((prev) => (prev.length ? [...prev, "of"] : ["o"]));
+        }
+        if (value === "r") {
+          setOreoList((prev) => [...prev, "r"]);
+        }
         break;
-      case "R":
-        setOreoList((prev) => [...prev, "r"]);
+      case "remove":
+        oreoList.length > 0 && setOreoList((prev) => prev.slice(0, -1));
         break;
-      case "and":
-        setOreoList((prev) => {
-          return prev.length > 0 && prev[prev.length - 1] !== "-"
-            ? [...prev, "-"]
-            : prev;
-        });
+      case "random":
+        setOreoList(generateRandomOreoList());
         break;
-      case "-1":
-        setOreoList((prev) => prev.slice(0, -1));
+      case "clear":
+        setOreoList([]);
         break;
       default:
         break;
     }
   };
 
-  const generateRandomOreoList = (): OreoKey[] => {
-    const keys = ["o", "r", "-"];
-    // type OreoKey = "o" | "r" | "-"
-    const randomList: OreoKey[] = Array.from(
-      { length: getRandomInteger(3, 10) },
-      () => {
-        const index = getRandomInteger(0, 2);
-        return keys[index] as OreoKey;
-      }
-    );
+  const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    const value = e.currentTarget.innerText;
 
-    // remove "-" from the beginning and the end
-    if (randomList[0] === "-") randomList.shift();
-    if (randomList[randomList.length - 1] === "-") randomList.pop();
+    const actionMap = {
+      O: () => action("add", "o"),
+      R: () => action("add", "r"),
+      and: () => action("add", "-"),
+      "-1": () => action("remove"),
+    };
 
-    return randomList.length ? randomList : generateRandomOreoList();
+    const actionValue = actionMap[value as keyof typeof actionMap];
+
+    actionValue && actionValue();
   };
+
+  const bindings = [
+    { keys: ["Enter"], action: () => submit(oreoList) },
+    { keys: ["o"], action: () => action("add", "o") },
+    { keys: ["r"], action: () => action("add", "r") },
+    { keys: ["-", " "], action: () => action("add", "-") },
+    { keys: ["Backspace"], action: () => action("remove") },
+  ];
+
+  useKeyBindings(bindings);
 
   return (
     <div className={`form ${!show ? "hidden" : "block"}`}>
@@ -112,6 +109,7 @@ export default function Form({
       <button
         className="submit-btn"
         type="button"
+        disabled={!oreoList.length}
         onClick={() => submit(oreoList)}
       >
         Generate
