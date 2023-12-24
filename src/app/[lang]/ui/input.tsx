@@ -1,18 +1,21 @@
-import { generateRandomOreoList } from "@/utils";
+import { generateRandomOreoList, translateOreoKeys } from "@/utils";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { FaRandom, FaTimes } from "react-icons/fa";
 import useKeyBindings from "../hook/useKeyBindings";
 
-const OreoKey = ["O", "R", "and", "-1"];
+const OreoKey = ["o", "r", "and", "-1"];
 
-export default function Form({
+export default function Input({
   submit,
   show,
 }: {
   submit: (oreoList: OreoKey[]) => void;
   show: boolean;
 }) {
+  const t = useTranslations();
   const [oreoList, setOreoList] = useState<OreoKey[]>([]);
+  const oreoString = translateOreoKeys(oreoList, t);
 
   const action = (action: string, value?: string) => {
     switch (action) {
@@ -25,7 +28,7 @@ export default function Form({
           );
         }
         if (value === "o") {
-          setOreoList((prev) => (prev.length ? [...prev, "of"] : ["o"]));
+          setOreoList((prev) => [...prev, "o"]);
         }
         if (value === "r") {
           setOreoList((prev) => [...prev, "r"]);
@@ -46,11 +49,11 @@ export default function Form({
   };
 
   const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const value = e.currentTarget.innerText;
+    const value = e.currentTarget.getAttribute("data-key");
 
     const actionMap = {
-      O: () => action("add", "o"),
-      R: () => action("add", "r"),
+      o: () => action("add", "o"),
+      r: () => action("add", "r"),
       and: () => action("add", "-"),
       "-1": () => action("remove"),
     };
@@ -71,48 +74,51 @@ export default function Form({
   useKeyBindings(bindings);
 
   return (
-    <div className={`form ${!show ? "hidden" : "block"}`}>
+    <div className={`input-form ${!show ? "hidden" : "block"}`}>
       <div className="card">
-        <h2 className="title">{`I'd like: `}</h2>
+        <h2 className="title">{t("input.meta")}</h2>
         <div className="input-box">
           <input
             type="text"
             id="oreo-input"
-            placeholder="Oreo..."
-            value={oreoList.join("")}
+            placeholder={t("input.placeholder")}
+            value={oreoString}
             readOnly
           />
           <span
             className="trailing"
             onClick={() =>
-              oreoList.length > 0
+              oreoList.length
                 ? setOreoList([])
                 : setOreoList(generateRandomOreoList())
             }
           >
-            {oreoList.length === 0 ? (
-              <FaRandom className="random" />
+            {!oreoList.length ? (
+              <span title={t("input.random")}>
+                <FaRandom className="random" />
+              </span>
             ) : (
-              <FaTimes className="remove" />
+              <span>
+                <FaTimes className="remove" />
+              </span>
             )}
           </span>
         </div>
         <div className="control">
           {OreoKey.map((key) => (
-            <div className="btn" key={key} onClick={onClick}>
-              {key}
+            <div className="btn" key={key} data-key={key} onClick={onClick}>
+              {t(`input.btn.${key}`)}
             </div>
           ))}
         </div>
       </div>
-
       <button
         className="submit-btn"
         type="button"
         disabled={!oreoList.length}
         onClick={() => submit(oreoList)}
       >
-        Generate
+        {t("input.generate")}
       </button>
     </div>
   );

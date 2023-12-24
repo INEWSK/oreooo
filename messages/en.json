@@ -1,5 +1,27 @@
 {
-  "Index": {
-    "title": "Hello world!"
+  "basic": {
+    "o": "O | o",
+    "r": "Re | re",
+    "and": "-"
+  },
+  "tooltip": {
+    "title": "Keyboard shortcuts: <br>o/r : Input 'O' or 'RE'<br>-/Space : Input Space<br>Enter : Generate<br>Backspace : Back"
+  },
+  "input": {
+    "meta": "I'd like:",
+    "placeholder": "Oreo...",
+    "random": "Random",
+    "generate": "Generate",
+    "btn": {
+      "o": "O",
+      "r": "R",
+      "and": "and",
+      "-1": "-1"
+    }
+  },
+  "output": {
+    "meta": "Here you are:",
+    "save": "Save image",
+    "back": "Back"
   }
 }

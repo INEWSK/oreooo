@@ -1,8 +1,6 @@
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
 const usePage = () => {
-  const t = useTranslations("Index");
   const [loading, setLoading] = useState(true);
   const [animating, setAnimating] = useState(true);
 
@@ -29,7 +27,6 @@ const usePage = () => {
   };
 
   return {
-    t,
     loading,
     animating,
     addLoading,

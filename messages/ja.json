@@ -1,6 +1,31 @@
 {
-  "Index": {
+  "index": {
     "title": "メッセージ",
     "message": "こんにちは、世界！"
+  },
+  "basic": {
+    "o": "オ",
+    "r": "レ",
+    "and": "-"
+  },
+  "tooltip": {
+    "title": "キーボード・ショートカット: <br>o/r/-/Space : 編集する<br>Enter : 実行<br>Backspace : 元に戻す"
+  },
+  "input": {
+    "meta": "私は...したい",
+    "placeholder": "オレオ...",
+    "random": "ランダム",
+    "generate": "実行",
+    "btn": {
+      "o": "+オ",
+      "r": "+レ",
+      "and": "+と",
+      "-1": "-1"
+    }
+  },
+  "output": {
+    "meta": "結果",
+    "save": "画像を保存する",
+    "back": "元に戻す"
   }
 }

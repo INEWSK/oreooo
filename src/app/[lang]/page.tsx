@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 import Loading from "@/components/loading";
 import { useState } from "react";
 import usePage from "./hook/usePage";
-import Form from "./ui/form";
+import Input from "./ui/input";
 import Output from "./ui/output";
 
 export default function Page() {
@@ -24,7 +24,7 @@ export default function Page() {
     <div className="app">
       <Loading show={loading} animate={animating} />
       <main className={`main ${loading ? "hidden" : "block"}`}>
-        <Form submit={submit} show={show} />
+        <Input submit={submit} show={show} />
         <Output back={back} oreoList={oreoList} />
         <Footer />
       </main>

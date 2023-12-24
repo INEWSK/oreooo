@@ -26,3 +26,9 @@ export const generateRandomOreoList = (): OreoKey[] => {
 
   return randomList.length ? randomList : generateRandomOreoList();
 };
+
+export const translateOreoKeys = (
+  oreoKeys: OreoKey[],
+  t: (key: string) => string
+): string =>
+  oreoKeys.map((v) => (v === "-" ? t("basic.and") : t(`basic.${v}`))).join("");

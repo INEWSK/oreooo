@@ -1,5 +1,6 @@
-import { loadImage } from "@/utils";
+import { loadImage, translateOreoKeys } from "@/utils";
 import { useCallback, useEffect, useRef } from "react";
+import { useTranslations } from "use-intl";
 
 type OutputProps = {
   back: () => void;
@@ -29,8 +30,10 @@ const loadOreoImages = async () => {
 };
 
 export default function Output({ back, oreoList }: OutputProps) {
+  const t = useTranslations();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const imgUrl = useRef<string>("");
+  const oreoString = translateOreoKeys(oreoList, t);
 
   type DrawItem = {
     image: HTMLImageElement;
@@ -101,21 +104,21 @@ export default function Output({ back, oreoList }: OutputProps) {
   return (
     <div className={`output ${!oreoList.length ? "hidden" : "block"}`}>
       <div className="card">
-        <h2 className="title">{`Here's your`}</h2>
-        <h3 className="sub-title">{oreoList.join("")}</h3>
+        <h2 className="title">{t("output.meta")}</h2>
+        <h3 className="sub-title">{oreoString}</h3>
         <div className="output-image">
           <canvas width="240" height="0" ref={canvasRef} />
         </div>
         <div className="control">
           <button className="btn" type="button" onClick={back}>
-            Back
+            {t("output.back")}
           </button>
           <button
             className="btn"
             type="button"
             onClick={() => downloadImage({ url: imgUrl.current })}
           >
-            Save Image
+            {t("output.save")}
           </button>
         </div>
       </div>
