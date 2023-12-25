@@ -114,7 +114,7 @@ export default function Output({ back, oreoList }: OutputProps) {
         <div className="output-image">
           <canvas width="240" height="0" ref={canvasRef} />
         </div>
-        <div className="control">
+        <div className="btn-group">
           <button className="btn" type="button" onClick={back}>
             {t("output.back")}
           </button>

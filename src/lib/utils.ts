@@ -45,9 +45,9 @@ export const translateOreoKeys = (
       switch (v) {
         case "o":
         case "of":
-          return t("basic.o", { o: i === 0 ? "upper" : "other" });
+          return t("basic.o", { o: i === 0 ? "uppercase" : "other" });
         case "r":
-          return t("basic.r", { r: i === 0 ? "upper" : "other" });
+          return t("basic.r", { r: i === 0 ? "uppercase" : "other" });
         case "-":
           return t("basic.and");
       }

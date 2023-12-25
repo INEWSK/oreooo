@@ -98,6 +98,7 @@ export default function Input({
             id="oreo-input"
             placeholder={t("input.placeholder")}
             value={oreoString}
+            readOnly
           />
           <span
             className="trailing"
@@ -118,9 +119,9 @@ export default function Input({
             )}
           </span>
         </div>
-        <div className="control">
+        <div className="btn-group">
           {OreoKey.map((key) => (
-            <div className="btn" key={key} data-key={key} onClick={onClick}>
+            <div key={key} className="btn" data-key={key} onClick={onClick}>
               {t(`input.btn.${key}`)}
             </div>
           ))}

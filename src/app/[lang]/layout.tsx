@@ -8,10 +8,9 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 
-const seto = localFont({
-  src: "../../shared/fonts/Seto.woff",
+const naikai = localFont({
+  src: "../../shared/fonts/Naikai.woff2",
   display: "swap",
-  weight: "400",
 });
 
 export const metadata: Metadata = DEFAULT_META;
@@ -45,7 +44,7 @@ export default async function RootLayout({
 
   return (
     <html lang={lang}>
-      <body className={cn("antialiased", seto.className)}>
+      <body className={cn("antialiased", naikai.className)}>
         <NextIntlProvider
           messages={message}
           locale={lang}

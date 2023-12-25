@@ -76,7 +76,7 @@
 }
 
 .app {
-  @apply flex flex-col justify-center min-h-screen w-screen bg-[#caad9f] text-gray-700;
+  @apply flex flex-col justify-center min-h-screen w-screen bg-[#e0c3b4] text-gray-700;
 }
 
 .loading {
@@ -84,14 +84,14 @@
 }
 
 .main {
-  @apply mx-auto w-full max-w-lg min-w-min m-4 mb-0;
+  @apply mx-auto w-full max-w-xl min-w-min m-4 mb-0 p-4;
 
   .card {
-    @apply bg-white rounded-xl shadow-xl p-10 flex flex-col gap-x-5 gap-y-6 items-center justify-center;
+    @apply bg-white rounded-xl shadow-xl p-8 flex flex-col gap-x-5 gap-y-6 items-center justify-center;
   }
 
   .tooltip {
-    @apply absolute top-0 right-0 p-6;
+    @apply absolute top-0 right-0 p-6 hidden md:block;
   }
 
   .form {
@@ -102,11 +102,11 @@
   }
 
   .title {
-    @apply text-2xl font-bold cursor-default;
+    @apply text-3xl font-bold cursor-default;
   }
 
   .sub-title {
-    @apply text-2xl cursor-auto;
+    @apply text-4xl cursor-default;
   }
 
   .input-box {
@@ -124,9 +124,13 @@
       }
     }
   }
+
+  .output-image {
+    @apply my-2;
+  }
 }
 
-.control {
+.btn-group {
   @apply flex gap-4 select-none;
 
   .btn {
@@ -167,5 +171,22 @@
         @apply before:content-['_|_'];
       }
     }
+  }
+}
+
+@layer utilities {
+  @keyframes gradient-x {
+    0%,
+    100% {
+      background-size: 200% 200%;
+      background-position: left bottom;
+    }
+    50% {
+      background-size: 200% 200%;
+      background-position: right top;
+    }
+  }
+  .animate-gradient-x {
+    animation: gradient-x 15s ease infinite;
   }
 }

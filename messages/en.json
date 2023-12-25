@@ -1,7 +1,7 @@
 {
   "basic": {
-    "o": "{o, select, upper {O} other {o}}",
-    "r": "{r, select, upper {Re} other {re}}",
+    "o": "{o, select, uppercase {O} other {o}}",
+    "r": "{r, select, uppercase {Re} other {re}}",
     "and": "-"
   },
   "tooltip": {
@@ -24,7 +24,7 @@
     }
   },
   "output": {
-    "meta": "Here you are:",
+    "meta": "Here's your:",
     "save": "Save image",
     "back": "Back"
   }
