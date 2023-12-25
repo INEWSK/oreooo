@@ -1,4 +1,5 @@
-import { generateRandomOreoList, translateOreoKeys } from "@/utils";
+import TooltipComponent from "@/components/tooltip";
+import { cn, generateRandomOreoList, translateOreoKeys } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { FaRandom, FaTimes } from "react-icons/fa";
@@ -79,26 +80,24 @@ export default function Input({
   useKeyBindings(bindings);
 
   return (
-    <div className={`form ${!show ? "hidden" : "block"}`}>
+    <div className={cn("form", !show && "hidden")}>
       <div className="card">
-        <h2 className="title">{t("input.meta")}</h2>
-        {/* <div className="tooltip icon">
-          <span>{<FaExclamationCircle />}</span>
-          <span className="tooltip-text">
+        <div className="tooltip">
+          <TooltipComponent>
             <ul>
               {["title", "o/r", "-/space", "enter", "backspace"].map((key) => {
                 return <li key={key}>{t(`tooltip.${key}`)}</li>;
               })}
             </ul>
-          </span>
-        </div> */}
+          </TooltipComponent>
+        </div>
+        <h2 className="title">{t("input.meta")}</h2>
         <div className="input-box">
           <input
             type="text"
             id="oreo-input"
             placeholder={t("input.placeholder")}
             value={oreoString}
-            readOnly
           />
           <span
             className="trailing"

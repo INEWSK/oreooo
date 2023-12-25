@@ -1,4 +1,5 @@
 import NextIntlProvider from "@/lib/NextIntlRegistry";
+import { cn } from "@/lib/utils";
 import { DEFAULT_META } from "@/shared/constants";
 import "@/shared/styles/globals.scss";
 import dayjs from "dayjs";
@@ -44,7 +45,7 @@ export default async function RootLayout({
 
   return (
     <html lang={lang}>
-      <body className={seto.className}>
+      <body className={cn("antialiased", seto.className)}>
         <NextIntlProvider
           messages={message}
           locale={lang}

@@ -1,4 +1,4 @@
-import { loadImage, translateOreoKeys } from "@/utils";
+import { cn, loadImage, translateOreoKeys } from "@/lib/utils";
 import { useCallback, useEffect, useRef } from "react";
 import { useTranslations } from "use-intl";
 
@@ -107,7 +107,7 @@ export default function Output({ back, oreoList }: OutputProps) {
   }, [oreoList, convertImage, generate]);
 
   return (
-    <div className={`output ${!oreoList.length ? "hidden" : "block"}`}>
+    <div className={cn("output", !oreoList.length && "hidden")}>
       <div className="card">
         <h2 className="title">{t("output.meta")}</h2>
         <h3 className="sub-title">{oreoString}</h3>

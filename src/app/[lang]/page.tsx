@@ -2,6 +2,7 @@
 
 import Footer from "@/components/footer";
 import Loading from "@/components/loading";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import usePage from "./hook/usePage";
 import Input from "./ui/input";
@@ -13,6 +14,7 @@ export default function Page() {
   const show = oreoList.length === 0;
 
   const submit = (oreoList: OreoKey[]) => {
+    page.addLoading();
     setOreoList(oreoList);
   };
 
@@ -23,7 +25,7 @@ export default function Page() {
   return (
     <div className="app">
       <Loading show={loading} animate={animating} />
-      <main className={`main ${loading ? "hidden" : "block"}`}>
+      <main className={cn("main", loading && "hidden")}>
         <Input submit={submit} show={show} />
         <Output back={back} oreoList={oreoList} />
         <Footer />

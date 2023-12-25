@@ -1,3 +1,10 @@
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+
+export const cn = (...inputs: ClassValue[]) => {
+  return twMerge(clsx(inputs));
+};
+
 export const loadImage = (src: string) => {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
