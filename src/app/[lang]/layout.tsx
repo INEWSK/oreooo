@@ -1,6 +1,6 @@
 import NextIntlProvider from "@/lib/NextIntlRegistry";
 import { cn } from "@/lib/utils";
-import { DEFAULT_META } from "@/shared/constants";
+import { DEFAULT_META, LOCALES } from "@/shared/constants";
 import "@/shared/styles/globals.scss";
 import { Analytics } from "@vercel/analytics/react";
 import dayjs from "dayjs";
@@ -16,9 +16,6 @@ const naikai = localFont({
 
 export const metadata: Metadata = DEFAULT_META;
 
-// Can be imported from a shared config
-const locales = ["en", "zh-hant", "ja"];
-
 type RootLayoutProps = {
   children: React.ReactNode;
   params: {
@@ -31,7 +28,7 @@ export default async function RootLayout({
   params: { lang },
 }: RootLayoutProps) {
   // Validate that the incoming `locale` parameter is valid
-  if (!locales.includes(lang)) notFound();
+  if (!LOCALES.includes(lang)) notFound();
 
   let message;
 

@@ -11,7 +11,6 @@ import Output from "./ui/output";
 export default function Page() {
   const { loading, animating, ...page } = usePage();
   const [oreoList, setOreoList] = useState<OreoKey[]>([]);
-  const show = oreoList.length === 0;
 
   const submit = (oreoList: OreoKey[]) => {
     page.addLoading();
@@ -26,7 +25,7 @@ export default function Page() {
     <div className="app">
       <Loading show={loading} animate={animating} />
       <main className={cn("main", loading && "hidden")}>
-        <Input submit={submit} show={show} />
+        <Input submit={submit} show={!oreoList.length} />
         <Output back={back} oreoList={oreoList} />
         <Footer />
       </main>

@@ -1,4 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
+import type { TranslationValues } from "next-intl";
 import { twMerge } from "tailwind-merge";
 
 export const cn = (...inputs: ClassValue[]) => {
@@ -17,24 +18,26 @@ export const loadImage = (src: string) => {
 export const getRandomInteger = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
-export const generateRandomOreoList = (): OreoKey[] => {
+export const generateRandomOreoList = () => {
   const keys = ["o", "r", "-"];
-  const randomList: OreoKey[] = Array.from(
-    { length: getRandomInteger(3, 10) },
-    () => {
-      const index = getRandomInteger(0, 2);
-      return keys[index] as OreoKey;
-    }
+
+  const randomList = Array.from({ length: getRandomInteger(3, 12) }).reduce(
+    (acc: string[], _, i) => {
+      const last = acc[i - 1];
+      if (last === "-") {
+        return [...acc, keys[getRandomInteger(0, 1)]];
+      } else {
+        return [...acc, keys[getRandomInteger(0, 2)]];
+      }
+    },
+    []
   );
 
-  // remove "-" from the beginning and the end
   if (randomList[0] === "-") randomList.shift();
   if (randomList[randomList.length - 1] === "-") randomList.pop();
 
-  return randomList.length ? randomList : generateRandomOreoList();
+  return randomList as OreoKey[];
 };
-
-import type { TranslationValues } from "next-intl";
 
 export const translateOreoKeys = (
   oreoKeys: OreoKey[],
