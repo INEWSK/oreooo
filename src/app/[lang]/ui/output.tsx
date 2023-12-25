@@ -52,6 +52,11 @@ export default function Output({ back, oreoList }: OutputProps) {
         copyList.pop();
       }
 
+      // change to "of" after "o"
+      copyList.map(
+        (item, i) => i !== 0 && item === "o" && (copyList[i] = "of")
+      );
+
       const OREO_HEIGHT = 24;
       const GAP_HEIGHT = 72;
       const LAST_OREO_HEIGHT = 160 - OREO_HEIGHT;

@@ -27,8 +27,22 @@ export const generateRandomOreoList = (): OreoKey[] => {
   return randomList.length ? randomList : generateRandomOreoList();
 };
 
+import type { TranslationValues } from "next-intl";
+
 export const translateOreoKeys = (
   oreoKeys: OreoKey[],
-  t: (key: string) => string
+  t: (key: string, values?: TranslationValues) => string
 ): string =>
-  oreoKeys.map((v) => (v === "-" ? t("basic.and") : t(`basic.${v}`))).join("");
+  oreoKeys
+    .map((v, i) => {
+      switch (v) {
+        case "o":
+        case "of":
+          return t("basic.o", { o: i === 0 ? "upper" : "other" });
+        case "r":
+          return t("basic.r", { r: i === 0 ? "upper" : "other" });
+        case "-":
+          return t("basic.and");
+      }
+    })
+    .join("");

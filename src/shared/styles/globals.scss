@@ -17,7 +17,8 @@
     @apply bg-white rounded-xl shadow-xl p-8 flex flex-col gap-6 items-center justify-center;
   }
 
-  .input-form {
+  .form {
+    @apply relative;
     .card {
       @apply rounded-b-none;
     }

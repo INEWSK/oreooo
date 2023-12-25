@@ -9,7 +9,11 @@
     "and": "-"
   },
   "tooltip": {
-    "title": "キーボード・ショートカット: <br>o/r/-/Space : 編集する<br>Enter : 実行<br>Backspace : 元に戻す"
+    "title": "キーボード・ショートカット:",
+    "o/r": "o/r: 'オ' または 'レ' を入力する",
+    "-/space": "-/Space: 空白を入力する",
+    "enter": "Enter: 実行する",
+    "backspace": "Backspace: 元に戻す"
   },
   "input": {
     "meta": "私は...したい",

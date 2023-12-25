@@ -34,8 +34,12 @@ export default function Input({
           setOreoList((prev) => [...prev, "r"]);
         }
         break;
+      case "enter":
+        oreoList.length && submit(oreoList);
+        setOreoList([]);
+        break;
       case "remove":
-        oreoList.length > 0 && setOreoList((prev) => prev.slice(0, -1));
+        oreoList.length && setOreoList((prev) => prev.slice(0, -1));
         break;
       case "random":
         setOreoList(generateRandomOreoList());
@@ -48,7 +52,7 @@ export default function Input({
     }
   };
 
-  const onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  const onClick = (e: any) => {
     const value = e.currentTarget.getAttribute("data-key");
 
     const actionMap = {
@@ -56,6 +60,7 @@ export default function Input({
       r: () => action("add", "r"),
       and: () => action("add", "-"),
       "-1": () => action("remove"),
+      generate: () => action("enter"),
     };
 
     const actionValue = actionMap[value as keyof typeof actionMap];
@@ -64,7 +69,7 @@ export default function Input({
   };
 
   const bindings = [
-    { keys: ["Enter"], action: () => submit(oreoList) },
+    { keys: ["Enter"], action: () => action("enter") },
     { keys: ["o"], action: () => action("add", "o") },
     { keys: ["r"], action: () => action("add", "r") },
     { keys: ["-", " "], action: () => action("add", "-") },
@@ -74,9 +79,19 @@ export default function Input({
   useKeyBindings(bindings);
 
   return (
-    <div className={`input-form ${!show ? "hidden" : "block"}`}>
+    <div className={`form ${!show ? "hidden" : "block"}`}>
       <div className="card">
         <h2 className="title">{t("input.meta")}</h2>
+        {/* <div className="tooltip icon">
+          <span>{<FaExclamationCircle />}</span>
+          <span className="tooltip-text">
+            <ul>
+              {["title", "o/r", "-/space", "enter", "backspace"].map((key) => {
+                return <li key={key}>{t(`tooltip.${key}`)}</li>;
+              })}
+            </ul>
+          </span>
+        </div> */}
         <div className="input-box">
           <input
             type="text"
@@ -114,9 +129,10 @@ export default function Input({
       </div>
       <button
         className="submit-btn"
+        data-key="generate"
         type="button"
         disabled={!oreoList.length}
-        onClick={() => submit(oreoList)}
+        onClick={onClick}
       >
         {t("input.generate")}
       </button>

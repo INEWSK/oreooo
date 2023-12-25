@@ -1,11 +1,15 @@
 {
   "basic": {
-    "o": "O | o",
-    "r": "Re | re",
+    "o": "{o, select, upper {O} other {o}}",
+    "r": "{r, select, upper {Re} other {re}}",
     "and": "-"
   },
   "tooltip": {
-    "title": "Keyboard shortcuts: <br>o/r : Input 'O' or 'RE'<br>-/Space : Input Space<br>Enter : Generate<br>Backspace : Back"
+    "title": "Keyboard shortcuts:",
+    "o/r": "o/r: Input 'O' or 'RE'",
+    "-/space": "-/Space: Input Space",
+    "enter": "Enter: Generate",
+    "backspace": "Backspace: Back"
   },
   "input": {
     "meta": "I'd like:",
