@@ -2,6 +2,7 @@ import NextIntlProvider from "@/lib/NextIntlRegistry";
 import { cn } from "@/lib/utils";
 import { DEFAULT_META } from "@/shared/constants";
 import "@/shared/styles/globals.scss";
+import { Analytics } from "@vercel/analytics/react";
 import dayjs from "dayjs";
 
 import type { Metadata } from "next";
@@ -53,6 +54,7 @@ export default async function RootLayout({
         >
           {children}
         </NextIntlProvider>
+        <Analytics />
       </body>
     </html>
   );
