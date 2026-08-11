@@ -1,4 +1,7 @@
+"use client";
+
 import TooltipComponent from "@/components/tooltip";
+import { useKeyBindings } from "@/hooks/use-key-bindings";
 import {
   cn,
   generateRandomOreoList,
@@ -8,7 +11,6 @@ import {
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { FaRandom, FaTimes } from "react-icons/fa";
-import useKeyBindings from "../hook/useKeyBindings";
 
 const OreoKeys = ["o", "r", "and", "-1"] as const;
 
@@ -45,7 +47,7 @@ export default function Input({
         if (oreoList.length) submit(oreoList);
         break;
       case "remove":
-        oreoList.length && setOreoList((prev) => prev.slice(0, -1));
+        if (oreoList.length) setOreoList((prev) => prev.slice(0, -1));
         break;
       case "random":
         setOreoList(generateRandomOreoList());
@@ -53,14 +55,11 @@ export default function Input({
       case "clear":
         setOreoList([]);
         break;
-      default:
-        break;
     }
   };
 
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const value = e.currentTarget.getAttribute("data-key");
-
     const actionMap = {
       o: () => action("add", "o"),
       r: () => action("add", "r"),
@@ -68,9 +67,7 @@ export default function Input({
       "-1": () => action("remove"),
       generate: () => action("enter"),
     };
-
-    const actionValue = actionMap[value as keyof typeof actionMap];
-    actionValue && actionValue();
+    actionMap[value as keyof typeof actionMap]?.();
   };
 
   useKeyBindings(
@@ -84,7 +81,13 @@ export default function Input({
     show
   );
 
-  const shortcutKeys = ["title", "o/r", "-/space", "enter", "backspace"] as const;
+  const shortcutKeys = [
+    "title",
+    "o/r",
+    "-/space",
+    "enter",
+    "backspace",
+  ] as const;
 
   return (
     <div className={cn("form", !show && "hidden")}>

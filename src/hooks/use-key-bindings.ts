@@ -5,9 +5,12 @@ type KeyBinding = {
   action: () => void;
 };
 
-const useKeyBindings = (bindings: KeyBinding[], enabled = true) => {
+export function useKeyBindings(bindings: KeyBinding[], enabled = true) {
   const bindingsRef = useRef(bindings);
-  bindingsRef.current = bindings;
+
+  useEffect(() => {
+    bindingsRef.current = bindings;
+  }, [bindings]);
 
   useEffect(() => {
     if (!enabled) return;
@@ -17,7 +20,6 @@ const useKeyBindings = (bindings: KeyBinding[], enabled = true) => {
         item.keys.includes(e.key)
       );
       if (!binding) return;
-
       e.preventDefault();
       binding.action();
     };
@@ -25,6 +27,4 @@ const useKeyBindings = (bindings: KeyBinding[], enabled = true) => {
     document.addEventListener("keydown", onKeyStroke);
     return () => document.removeEventListener("keydown", onKeyStroke);
   }, [enabled]);
-};
-
-export default useKeyBindings;
+}

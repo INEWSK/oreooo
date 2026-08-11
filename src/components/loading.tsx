@@ -1,3 +1,4 @@
+import { asset } from "@/lib/asset";
 import Image from "next/image";
 
 export default function Loading({
@@ -12,7 +13,7 @@ export default function Loading({
   return (
     <div
       className={`loading transition-all transform ${
-        animate ? `animate-bounce-in` : `animate-bounce-out`
+        animate ? "animate-bounce-in" : "animate-bounce-out"
       }`}
       role="status"
       aria-live="polite"
@@ -20,7 +21,7 @@ export default function Loading({
     >
       <Image
         className="animate-spin-slow"
-        src="/assets/images/oreo.png"
+        src={asset("/assets/images/oreo.png")}
         alt=""
         width={160}
         height={160}

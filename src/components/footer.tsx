@@ -1,24 +1,24 @@
 "use client";
 
-import { LOCALE_LABELS, LOCALES, type Locale } from "@/shared/constants";
+import { localeLabels, locales, type Locale } from "@/lib/locales";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
 export default function Footer() {
   const params = useParams();
-  const current = params.lang as string;
+  const current = params.locale as string;
 
   return (
     <footer className="footer">
       <ul className="lang-list">
-        {LOCALES.map((locale: Locale) => (
+        {locales.map((locale: Locale) => (
           <li key={locale} className="lang" title={locale}>
             <Link
               href={`/${locale}`}
               aria-current={locale === current ? "page" : undefined}
               className={locale === current ? "is-active" : undefined}
             >
-              {LOCALE_LABELS[locale]}
+              {localeLabels[locale]}
             </Link>
           </li>
         ))}
