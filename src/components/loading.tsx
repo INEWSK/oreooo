@@ -7,26 +7,26 @@ export default function Loading({
   show?: boolean;
   animate?: boolean;
 }) {
+  if (!show) return null;
+
   return (
-    show && (
-      <div
-        className={`loading transition-all transform ${
-          animate ? `animate-bounce-in` : `animate-bounce-out`
-        }`}
-      >
-        <Image
-          className="animate-spin-slow"
-          src="/assets/images/oreo.png"
-          alt="loading"
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{
-            width: "10rem",
-            height: "10rem",
-          }}
-        />
-      </div>
-    )
+    <div
+      className={`loading transition-all transform ${
+        animate ? `animate-bounce-in` : `animate-bounce-out`
+      }`}
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+    >
+      <Image
+        className="animate-spin-slow"
+        src="/assets/images/oreo.png"
+        alt=""
+        width={160}
+        height={160}
+        priority
+      />
+      <span className="sr-only">Loading</span>
+    </div>
   );
 }

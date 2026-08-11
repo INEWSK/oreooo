@@ -24,16 +24,18 @@ You can view a live demo of the project at [https://oreooo.inewsk.me](https://or
 
 ## Keyboard shortcuts
 
-| Key           | Action            |
-| ------------- | ----------------- |
-| `o` / `r`     | Input "O" or "RE" |
-| `-` / `Space` | Input Space       |
-| `Enter`       | Generate          |
-| `Backspace`   | Back              |
+| Key           | Action                 |
+| ------------- | ---------------------- |
+| `o` / `r`     | Input "O" or "RE"      |
+| `-` / `Space` | Input separator        |
+| `Enter`       | Generate               |
+| `Backspace`   | Delete last            |
 
 ## Contributing
 
-The text in Oreooo is in Chinese by default. You can translate it in your language. Just edit your language pack in src/i18n.ts and **pull requests** to me. Thanks!
+The UI copy lives in `messages/*.json` (`en`, `zh-hant`, `ja`). Translate or improve a language pack and open a pull request. Thanks!
+
+If you change message text that introduces new glyphs, place the full Naikai font at `src/shared/fonts/Naikai.source.woff2` and run `yarn font:subset`.
 
 ## License
 

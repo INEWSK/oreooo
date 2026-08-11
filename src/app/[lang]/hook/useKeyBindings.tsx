@@ -1,19 +1,30 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
-const useKeyBindings = (bindings: { keys: string[]; action: () => void }[]) => {
+type KeyBinding = {
+  keys: string[];
+  action: () => void;
+};
+
+const useKeyBindings = (bindings: KeyBinding[], enabled = true) => {
+  const bindingsRef = useRef(bindings);
+  bindingsRef.current = bindings;
+
   useEffect(() => {
+    if (!enabled) return;
+
     const onKeyStroke = (e: KeyboardEvent) => {
-      bindings.forEach((binding) => {
-        if (binding.keys.includes(e.key)) {
-          binding.action && binding.action();
-        }
-      });
+      const binding = bindingsRef.current.find((item) =>
+        item.keys.includes(e.key)
+      );
+      if (!binding) return;
+
+      e.preventDefault();
+      binding.action();
     };
 
     document.addEventListener("keydown", onKeyStroke);
-    // before unmount or add new bindings, remove old bindings
     return () => document.removeEventListener("keydown", onKeyStroke);
-  }, [bindings]);
+  }, [enabled]);
 };
 
 export default useKeyBindings;

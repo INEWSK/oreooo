@@ -30,19 +30,27 @@ TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
 const TooltipComponent = ({
   children,
-  className,
-  ...props
-}: React.ComponentPropsWithoutRef<"div">) => {
+  label,
+}: {
+  children: React.ReactNode;
+  label: string;
+}) => {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger>
-          <FaExclamationCircle className="opacity-40" />
+        <TooltipTrigger asChild>
+          <button
+            type="button"
+            className="tooltip-trigger"
+            aria-label={label}
+          >
+            <FaExclamationCircle aria-hidden />
+          </button>
         </TooltipTrigger>
         <TooltipContent
           side="bottom"
           align="end"
-          className="opacity-40 bg-black text-white"
+          className="bg-zinc-900 text-white border-zinc-900"
         >
           {children}
         </TooltipContent>
