@@ -34,3 +34,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# full CJK font source used only for subsetting
+/src/shared/fonts/Naikai.source.woff2

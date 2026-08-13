@@ -94,11 +94,28 @@
     @apply absolute top-0 right-0 p-6 hidden md:block;
   }
 
+  .tooltip-trigger {
+    @apply text-zinc-500 transition-colors;
+
+    &:hover,
+    &:focus-visible {
+      @apply text-zinc-800;
+    }
+
+    &:focus-visible {
+      @apply outline-none ring-2 ring-zinc-700 ring-offset-2 rounded-full;
+    }
+  }
+
   .form {
     @apply relative;
     .card {
       @apply rounded-b-none;
     }
+  }
+
+  .brand {
+    @apply text-sm tracking-[0.35em] uppercase text-zinc-500 cursor-default -mb-4;
   }
 
   .title {
@@ -109,18 +126,38 @@
     @apply text-4xl cursor-default text-center;
   }
 
+  .shortcuts-mobile {
+    @apply w-full md:hidden text-sm text-zinc-600 -mt-2;
+
+    summary {
+      @apply cursor-pointer select-none list-none text-center underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-700 focus-visible:ring-offset-2 rounded;
+    }
+
+    ul {
+      @apply mt-3 space-y-1 text-left px-2;
+    }
+  }
+
   .input-box {
     @apply relative;
 
     input {
       @apply w-full px-4 py-3 pe-11 text-3xl border border-zinc-200 rounded-xl shadow-sm text-center outline-none caret-transparent bg-gray-100;
+
+      &:focus-visible {
+        @apply ring-2 ring-zinc-700 ring-offset-2;
+      }
     }
 
     .trailing {
-      @apply absolute inset-y-0 end-0 flex items-center z-20 me-2 p-4 cursor-pointer text-zinc-400;
+      @apply absolute inset-y-0 end-0 flex items-center z-20 me-2 p-4 cursor-pointer text-zinc-500 bg-transparent border-0;
 
       &:hover {
-        @apply text-zinc-600 duration-300;
+        @apply text-zinc-700 duration-300;
+      }
+
+      &:focus-visible {
+        @apply outline-none text-zinc-800 ring-2 ring-zinc-700 ring-offset-2 rounded-full;
       }
     }
   }
@@ -128,16 +165,28 @@
   .output-image {
     @apply my-2;
   }
+
+  .output-error {
+    @apply mt-3 text-sm text-red-700 text-center;
+  }
 }
 
 .btn-group {
   @apply flex gap-3 sm:gap-4 select-none;
 
   .btn {
-    @apply px-4 py-2 border-2 border-zinc-700 rounded-full cursor-pointer transition-colors ease-in-out;
+    @apply px-4 py-2 border-2 border-zinc-700 rounded-full cursor-pointer transition-colors ease-in-out bg-transparent;
 
-    &:hover {
+    &:hover:not(:disabled) {
       @apply bg-zinc-700 text-white duration-200;
+    }
+
+    &:focus-visible {
+      @apply outline-none ring-2 ring-zinc-700 ring-offset-2;
+    }
+
+    &:disabled {
+      @apply opacity-40 cursor-not-allowed;
     }
   }
 }
@@ -145,8 +194,16 @@
 .submit-btn {
   @apply text-white bg-zinc-600 p-4 rounded-b-xl text-2xl transition-colors ease-in-out w-full;
 
-  &:hover {
+  &:hover:not(:disabled) {
     @apply bg-zinc-700 duration-200;
+  }
+
+  &:focus-visible {
+    @apply outline-none ring-2 ring-zinc-800 ring-offset-2;
+  }
+
+  &:disabled {
+    @apply opacity-40 cursor-not-allowed;
   }
 }
 
@@ -160,17 +217,41 @@
       &:not(:first-child) {
         @apply before:content-['_/_'];
       }
+
+      a {
+        @apply rounded px-1;
+
+        &:focus-visible {
+          @apply outline-none ring-2 ring-zinc-700 ring-offset-2;
+        }
+
+        &.is-active {
+          @apply font-bold text-zinc-900 underline underline-offset-4;
+        }
+      }
     }
   }
 
   .meta {
     a {
-      @apply text-gray-500;
+      @apply text-gray-500 rounded;
 
       &:not(:first-child) {
         @apply before:content-['_|_'];
       }
+
+      &:focus-visible {
+        @apply outline-none ring-2 ring-zinc-700 ring-offset-2;
+      }
     }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-bounce-in,
+  .animate-bounce-out,
+  .animate-spin-slow {
+    animation: none !important;
   }
 }
 
