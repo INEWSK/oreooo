@@ -1,16 +1,16 @@
-import { Metadata } from "next";
-
-export const LOCALES = ["en", "zh-hant", "ja"];
+import { asset } from "@/lib/asset";
+import type { Metadata } from "next";
 
 export const DEFAULT_META: Metadata = {
   title: "OREOOO",
+  description: "Build your Oreo stack and save it as an image.",
   icons: [
     {
-      url: "assets/icons/favicon.ico",
+      url: asset("/assets/icons/favicon.ico"),
       rel: "icon",
     },
     {
-      url: "assets/icons/apple-touch-icon.png",
+      url: asset("/assets/icons/apple-touch-icon.png"),
       rel: "apple-touch-icon",
     },
   ],
