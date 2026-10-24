@@ -49,12 +49,6 @@ export default function Input({
       case "remove":
         if (oreoList.length) setOreoList((prev) => prev.slice(0, -1));
         break;
-      case "random":
-        setOreoList(generateRandomOreoList());
-        break;
-      case "clear":
-        setOreoList([]);
-        break;
     }
   };
 

@@ -34,9 +34,7 @@ yarn build
 
 ## Static build
 
-`next.config.ts` sets `output: "export"`. `yarn build` writes the site to `./out` with an empty `basePath`, which is what `*.pages.dev` and `oreooo.inewsk.me` expect.
-
-`BASE_PATH` is optional and unset for this deploy. Set it only when hosting the export under a subpath.
+`next.config.ts` sets `output: "export"`. `yarn build` writes the site to `./out` at the site root, which is what `*.pages.dev` and `oreooo.inewsk.me` expect.
 
 ## Cloudflare Pages
 

@@ -1,4 +1,3 @@
-import { asset } from "@/lib/asset";
 import Image from "next/image";
 
 export default function Loading({
@@ -21,7 +20,7 @@ export default function Loading({
     >
       <Image
         className="animate-spin-slow"
-        src={asset("/assets/images/oreo.png")}
+        src="/assets/images/oreo.png"
         alt=""
         width={160}
         height={160}

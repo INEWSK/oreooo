@@ -5,8 +5,7 @@ import { defaultLocale } from "@/lib/locales";
  * Immediate location.replace so static hosts don't need server redirects.
  */
 export default function HomePage() {
-  const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
-  const href = `${base}/${defaultLocale}/`;
+  const href = `/${defaultLocale}/`;
 
   return (
     <main className="app">

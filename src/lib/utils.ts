@@ -1,7 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import type { TranslationValues } from "next-intl";
 import { twMerge } from "tailwind-merge";
-import { asset } from "./asset";
 
 export const MAX_OREO_LENGTH = 32;
 
@@ -26,9 +25,9 @@ let oreoImagesPromise: Promise<OreoImageSet> | null = null;
 export const loadOreoImages = () => {
   if (!oreoImagesPromise) {
     oreoImagesPromise = Promise.all([
-      loadImage(asset("/assets/images/o.png")),
-      loadImage(asset("/assets/images/r.png")),
-      loadImage(asset("/assets/images/of.png")),
+      loadImage("/assets/images/o.png"),
+      loadImage("/assets/images/r.png"),
+      loadImage("/assets/images/of.png"),
     ]).then(([o, r, of]) => ({ o, r, of }));
   }
   return oreoImagesPromise;
