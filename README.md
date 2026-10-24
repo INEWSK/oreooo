@@ -11,10 +11,17 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+Local checks:
+
+```bash
+yarn lint
+yarn build
+```
+
 ## Demo
 
 - Custom domain: [https://oreooo.inewsk.me](https://oreooo.inewsk.me)
-- Production deploys go to Cloudflare Pages, project name `oreooo`. After the project exists, Pages serves it at `https://oreooo.pages.dev` (when that name is free). Attach the custom domain to that project in the Cloudflare dashboard.
+- Cloudflare Pages project name: `oreooo` (`https://oreooo.pages.dev` when that name is free)
 
 ## Keyboard shortcuts
 
@@ -27,44 +34,36 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Static build
 
-`next.config.ts` sets `output: "export"`. `yarn build` writes the site to `./out` with an empty `basePath`, which is what `*.pages.dev` and a custom domain at the site root expect.
+`next.config.ts` sets `output: "export"`. `yarn build` writes the site to `./out` with an empty `basePath`, which is what `*.pages.dev` and `oreooo.inewsk.me` expect.
 
-```bash
-yarn lint
-yarn build
-```
-
-`BASE_PATH` is optional and unset in CI. Set it only when hosting the export under a subpath.
+`BASE_PATH` is optional and unset for this deploy. Set it only when hosting the export under a subpath.
 
 ## Cloudflare Pages
 
-Workflow: [`.github/workflows/cloudflare-pages.yml`](./.github/workflows/cloudflare-pages.yml)
+Production deploys come from the [Cloudflare Workers & Pages GitHub app](https://developers.cloudflare.com/pages/configuration/git-integration/github-integration/). Connect the repo in the dashboard once. Pages builds and publishes on every push. Pull requests from this repository get preview deployments. Build settings live on the Pages project, not in GitHub Actions.
 
-- Pull requests run `yarn install --frozen-lockfile`, `yarn lint`, and `yarn build`. A failure fails the check.
-- Pushes to `main` run those checks, then deploy `out/` with `cloudflare/wrangler-action` (`pages deploy out --project-name=oreooo`). `main` is the production branch.
-- Pull requests from this repository also deploy a preview for the head branch. Fork pull requests are linted and built only. Preview deploy is skipped when the secrets below are missing; a production deploy fails if they are missing.
+In **Workers & Pages → Create → Pages → Connect to Git**, choose `INEWSK/oreooo` and use:
 
-### GitHub Actions secrets
-
-Add both under **Settings → Secrets and variables → Actions**. Do not commit the values.
-
-| Secret | What to store |
+| Setting | Value |
 | --- | --- |
-| `CLOUDFLARE_API_TOKEN` | API token with **Account · Cloudflare Pages · Edit** |
-| `CLOUDFLARE_ACCOUNT_ID` | Cloudflare account ID (dashboard overview → API) |
+| Project name | `oreooo` |
+| Production branch | `main` |
+| Framework preset | Next.js (Static HTML Export) |
+| Build command | `yarn build` |
+| Build output directory | `out` |
+| Root directory | repository root |
 
-Create the token from the [Cloudflare API tokens page](https://dash.cloudflare.com/?to=/:account/api-tokens): Custom token → Account, Cloudflare Pages, Edit.
+Node.js is pinned to `22.16.0` in [`.node-version`](./.node-version). Pages reads that file. Next.js 16 needs Node 20.9 or newer. New Pages projects already default to Node 22 on the [v3 build image](https://developers.cloudflare.com/pages/configuration/build-image/).
 
-### Create the Pages project once
+The lockfile is Yarn 1 (`yarn.lock` v1). The v3 image defaults to Yarn 4 and does not infer the Yarn version from the lockfile, so set this environment variable for **Production and Preview** (Settings → Environment variables):
 
-The first deploy needs a Pages project named `oreooo` with production branch `main`. Create it before that deploy:
+| Name | Value |
+| --- | --- |
+| `YARN_VERSION` | `1.22.22` |
 
-- Dashboard: **Workers & Pages → Create → Pages → Upload assets**, name `oreooo`, production branch `main`.
-- Or, with the same account credentials: `npx wrangler pages project create oreooo --production-branch main`
+Then attach the custom domain `oreooo.inewsk.me` on the project (Custom domains) and follow the DNS prompt.
 
-If `oreooo` is already taken on `pages.dev`, pick another project name and set `PAGES_PROJECT` in the workflow to match.
-
-Direct Upload from GitHub Actions is the deploy path ([direct upload with CI](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/), [static Next.js on Pages](https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/)). Build command is `yarn build` (Next `next build`); output directory is `out`.
+Reference: [static Next.js on Pages](https://developers.cloudflare.com/pages/framework-guides/nextjs/deploy-a-static-nextjs-site/) (build `next build`, output directory `out`). `yarn build` runs that same `next build`.
 
 ## Contributing
 
