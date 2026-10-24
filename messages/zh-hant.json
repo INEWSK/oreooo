@@ -2,30 +2,32 @@
   "basic": {
     "o": "奧",
     "r": "利",
-    "and": "与"
+    "and": "與"
   },
   "tooltip": {
-    "title": "鍵盤快捷鍵:",
-    "o/r": "o/r : 輸入奧/利",
-    "-/space": "-/空白 : 輸入与",
-    "enter": "回車 : 生成",
-    "backspace": "退格 : 返回"
+    "title": "鍵盤快捷鍵",
+    "o/r": "o/r：輸入奧/利",
+    "-/space": "-/空白：輸入分隔",
+    "enter": "Enter：生成",
+    "backspace": "Backspace：刪除最後一個"
   },
   "input": {
     "meta": "我想要：",
     "placeholder": "奧利奧...",
     "random": "隨機",
+    "clear": "清除",
     "generate": "生成",
     "btn": {
       "o": "+奧",
       "r": "+利",
-      "and": "+与",
+      "and": "+與",
       "-1": "-1"
     }
   },
   "output": {
     "meta": "這是你的",
     "save": "保存圖片",
-    "back": "返回"
+    "back": "返回",
+    "error": "無法載入餅乾圖片，請再試一次。"
   }
 }

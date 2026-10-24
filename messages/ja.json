@@ -1,25 +1,22 @@
 {
-  "index": {
-    "title": "メッセージ",
-    "message": "こんにちは、世界！"
-  },
   "basic": {
     "o": "オ",
     "r": "レ",
     "and": "と"
   },
   "tooltip": {
-    "title": "キーボード・ショートカット:",
-    "o/r": "o/r: 'オ' または 'レ' を入力する",
-    "-/space": "-/Space: 空白を入力する",
-    "enter": "Enter: 実行する",
-    "backspace": "Backspace: 元に戻す"
+    "title": "キーボードショートカット",
+    "o/r": "o/r: 「オ」または「レ」を入力",
+    "-/space": "-/Space: 区切りを入力",
+    "enter": "Enter: 生成",
+    "backspace": "Backspace: ひとつ戻す"
   },
   "input": {
-    "meta": "私は...したい",
+    "meta": "ほしいのは：",
     "placeholder": "オレオ...",
     "random": "ランダム",
-    "generate": "実行",
+    "clear": "クリア",
+    "generate": "生成",
     "btn": {
       "o": "+オ",
       "r": "+レ",
@@ -28,8 +25,9 @@
     }
   },
   "output": {
-    "meta": "結果",
-    "save": "画像を保存する",
-    "back": "元に戻す"
+    "meta": "できたよ：",
+    "save": "画像を保存",
+    "back": "戻る",
+    "error": "画像を読み込めませんでした。もう一度お試しください。"
   }
 }

@@ -5,16 +5,17 @@
     "and": "-"
   },
   "tooltip": {
-    "title": "Keyboard shortcuts:",
+    "title": "Keyboard shortcuts",
     "o/r": "o/r: Input 'O' or 'RE'",
-    "-/space": "-/Space: Input Space",
+    "-/space": "-/Space: Input separator",
     "enter": "Enter: Generate",
-    "backspace": "Backspace: Back"
+    "backspace": "Backspace: Delete last"
   },
   "input": {
     "meta": "I'd like:",
     "placeholder": "Oreo...",
     "random": "Random",
+    "clear": "Clear",
     "generate": "Generate",
     "btn": {
       "o": "O",
@@ -26,6 +27,7 @@
   "output": {
     "meta": "Here's your:",
     "save": "Save image",
-    "back": "Back"
+    "back": "Back",
+    "error": "Couldn't load cookie images. Please try again."
   }
 }
