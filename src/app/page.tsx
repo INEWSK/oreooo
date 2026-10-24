@@ -1,8 +1,8 @@
 import { defaultLocale } from "@/lib/locales";
 
 /**
- * Static entry for `output: "export"` / GitHub Pages.
- * Prefer an immediate location.replace so hosting doesn't need server redirects.
+ * Static entry for `output: "export"`.
+ * Immediate location.replace so static hosts don't need server redirects.
  */
 export default function HomePage() {
   const base = process.env.NEXT_PUBLIC_BASE_PATH || "";
